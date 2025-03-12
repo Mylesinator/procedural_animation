@@ -90,14 +90,21 @@ setInterval(() => {
     bgCtx.clearRect(0, 0, background.width, background.height);
     bgCtx.fillStyle = "rgb(156, 235, 255)";
     bgCtx.fillRect(0, 0, background.width, background.height);
-    bgCtx.fillStyle = "black";
     let rSize = (size/100)*(background.height/2);
 
-    for (let i = 0; i < background.width/pixelation; i++) {
-        let x = i + (Date.now() / 1000 * speed * 0.66);
-        let y = ((perlin(x / 100, 100) + perlin(x / 10, 100)/100) * rSize) + background.height/(100/center1); // 2 layers of noise for more detail
+    for (let i = 0; i < background.width / pixelation; i++) {
+        bgCtx.fillStyle = "black";
+        let x = i + (Date.now() / 1000 * speed);
+        let y = ((perlin(x / 100, 100) + perlin(-x / 10, 100) / 100) * rSize) + background.height / (100 / center1); // 2 layers of noise for more detail
+        let y2 = ((perlin(x / 500, 50) + perlin(x / 10, 50) / 10) * (rSize/2)) + background.height / (100 / center1); // 2 layers of noise for more detail
+        let dy = y - y2;
 
-        bgCtx.fillRect(i*pixelation, background.height-y, pixelation, y);
+        bgCtx.fillRect(i * pixelation, background.height - y, pixelation, y);
+
+        bgCtx.fillStyle = "white";
+        if (dy > 0) {
+            bgCtx.fillRect(i * pixelation, background.height - y, pixelation, dy);
+        };
     }
 
     bgCtx.fillStyle = "rgb(46, 46, 46)";
