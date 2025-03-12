@@ -31,8 +31,36 @@ for (let i = 0; i < 256; i++) {
 
 let p = permutation;
 
+function grad(hash, x, y) {
+    let h = hash & 7;
+    let u = h < 4 ? x : y;
+    let v = h < 4 ? y : x;
+    return ((h & 1) ? -u : u) + ((h & 2) ? -2 * v : 2 * v);
+}
+
 function perlin(x, y) {
-    return p[p[x] + y];
+    let X = Math.floor(x) & 255;
+    let Y = Math.floor(y) & 255;
+
+    let xf = x - Math.floor(x);
+    let yf = y - Math.floor(y);
+
+    let u = smoothstep(0, 1, xf);
+    let v = smoothstep(0, 1, yf);
+
+    let aa = p[p[X] + Y];
+    let ab = p[p[X] + Y + 1];
+    let ba = p[p[X + 1] + Y];
+    let bb = p[p[X + 1] + Y + 1];
+
+    let g1 = grad(aa, xf, yf);
+    let g2 = grad(ba, xf - 1, yf);
+    let g3 = grad(ab, xf, yf - 1);
+    let g4 = grad(bb, xf - 1, yf - 1);
+
+    let x1 = (1 - u) * g1 + u * g2;
+    let x2 = (1 - u) * g3 + u * g4;
+    return (1 - v) * x1 + v * x2;
 }
 
 const background = document.getElementById("backgroundCanvas");
