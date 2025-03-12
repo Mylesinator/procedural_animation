@@ -4,7 +4,7 @@ function clamp(x, min, max) {
 
 function smoothstep(edge0, edge1, x) {
     x = clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
-    return (x ** 2 * (3-2*x));
+    return (x ** 2 * (3 - 2 * x));
 }
 
 let permutation = [
