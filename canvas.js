@@ -76,17 +76,8 @@ function setCanvasSize() {
     character.width = window.innerWidth;
 }
 
-//function draw() {
-//    bgCtx.fillStyle = "black";
-//    bgCtx.fillRect(10, 10, 100, 100);
-//
-//    charCtx.fillStyle = "green";
-//    charCtx.fillRect(20, 20, 100, 100);
-//}
-
 window.addEventListener("resize", setCanvasSize);
 setCanvasSize();
-// draw();
 
 let pixelation = 5;
 let size = 50; // 0 - 100
