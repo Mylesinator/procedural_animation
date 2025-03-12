@@ -88,4 +88,29 @@ function draw() {
 
 window.addEventListener("resize", setCanvasSize);
 setCanvasSize();
-draw();
+// draw();
+
+let pixelation = 5;
+let size = 50; // 0 - 100
+let center1 = 50; // 0 - 100
+let center2 = 25; // 0 - 100
+let speed = 3;
+// Background Loop logic
+setInterval(() => {
+    bgCtx.clearRect(0, 0, background.width, background.height);
+    bgCtx.fillStyle = "rgb(156, 235, 255)";
+    bgCtx.fillRect(0, 0, background.width, background.height);
+    bgCtx.fillStyle = "black";
+    let rSize = (size/100)*(background.height/2);
+    for (let i = 0; i < background.width/pixelation; i++) {
+        let x = i + (Date.now() / 1000 * speed * 0.66);
+        let y = ((perlin(x / 100, 100) + perlin(x / 10, 100)/100) * rSize) + background.height/(100/center1); // 2 layers of noise for more detail
+        bgCtx.fillRect(i*pixelation, background.height-y, pixelation, y);
+    }
+    bgCtx.fillStyle = "rgb(46, 46, 46)";
+    for (let i = 0; i < background.width/pixelation; i++) {
+        let x = i + (Date.now() / 1000 * speed);
+        let y = ((perlin(x / 100, 0) + perlin(x / 10, 0)/50) * rSize) + background.height/(100/center2); // 2 layers of noise for more detail
+        bgCtx.fillRect(i*pixelation, background.height-y, pixelation, y);
+    }
+},0);

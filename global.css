@@ -6,3 +6,7 @@
 canvas {
     position: absolute;
 }
+
+#backgroundCanvas {
+    /* filter: blur(3px); */
+}
