@@ -76,13 +76,25 @@ let speed = 3;
 
 // Background Loop logic
 setInterval(() => {
+    skyCtx.clearRect(0, 0, sky.width, sky.height);
     skyCtx.fillStyle = "rgb(156, 235, 255)";
     skyCtx.fillRect(0, 0, sky.width, sky.height);
 
     bgCtx.clearRect(0, 0, background.width, background.height);
-    bgCtx.fillStyle = "rgb(156, 235, 255)";
-    bgCtx.fillRect(0, 0, background.width, background.height);
-    let rSize = (size/100) * (background.height / 2);
+    let rSize = (size / 100) * (background.height / 2);
+
+    for (let i = 0; i < sky.width / pixelation; i++) {
+        let y = i + (Date.now() / 1000 * speed);
+        let z = (perlin(0, y / 100) + 1) / 2;
+
+        // skyCtx.fillStyle = `rgba(0, 0, 0, ${z})`;
+        // skyCtx.fillRect(i * pixelation, 0, pixelation, sky.height);
+
+        if (z > 0.5) {
+            skyCtx.fillStyle = `rgba(255, 255, 255, ${z})`;
+            skyCtx.fillRect(i * pixelation, 0, pixelation, sky.height);
+        }
+    }
 
     for (let i = 0; i < background.width / pixelation; i++) {
         bgCtx.fillStyle = "black";
