@@ -72,7 +72,7 @@ let pixelation = 5;
 let size = 50; // 0 - 100
 let center1 = 60; // 0 - 100
 let center2 = 25; // 0 - 100
-let speed = 3;
+let speed = 5;
 
 // Background Loop logic
 setInterval(() => {
@@ -84,7 +84,7 @@ setInterval(() => {
     let rSize = (size / 100) * (background.height / 2);
 
     for (let i = 0; i < sky.width / pixelation; i++) {
-        let y = i + (Date.now() / 1000 * speed);
+        let y = i + (Date.now() / 1000 * speed * 0.5);
         let z = (perlin(0, y / 100) + 1) / 2;
 
         // skyCtx.fillStyle = `rgba(0, 0, 0, ${z})`;
