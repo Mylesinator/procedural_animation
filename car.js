@@ -1,4 +1,4 @@
-function drawCar(charCtx) {
+function drawCar(charCtx, character) {
     // Target car area parameters
     let carWidth = character.height / 4;
     let carHeight = character.height / 10;

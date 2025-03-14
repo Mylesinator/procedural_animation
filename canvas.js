@@ -159,4 +159,4 @@ setInterval(() => {
     }
 }, 0);
 
-drawCar(charCtx);
+drawCar(charCtx, character);
