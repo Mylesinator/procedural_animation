@@ -72,11 +72,11 @@ let pixelation = 5;
 let size = 50; // 0 - 100
 let center1 = 60; // 0 - 100
 let center2 = 25; // 0 - 100
-let speed = 3;
-let cloud_density = 0.25; // 0 - 1
-let cloud_shake = 1; // 0 - Infinity
-let cloud_size = 1.2; // 0 - Infinity
-let cloud_threshold = 0.5; // 0 - 1
+let speed = 10;
+let cloud_density = 0.18; // 0 - 1
+let cloud_shake = 50; // 0 - Infinity
+let cloud_size = 1.5; // 0 - Infinity
+let cloud_threshold = 0.2; // 0 - 1
 
 setInterval(() => {
     skyCtx.clearRect(0, 0, sky.width, sky.height);
@@ -88,22 +88,28 @@ setInterval(() => {
         let z = (perlin(0, y / 100) + 1) / 2;
 
         if (z > cloud_threshold) {
-            skyCtx.fillStyle = `rgba(255, 255, 255, ${z*cloud_density})`;
-            skyCtx.beginPath();
-        
+
             let cloudX = i * pixelation;
-            let cloudY = (perlin(0, y / 10) * sky.height/9 + sky.height/4);
-        
-            for (let j = 0; j < Math.floor(z * 10); j++) {
-                let perlinOffsetX = perlin(0, cloudY/1000 * cloud_shake) * size/2;
-                let perlinOffsetY = perlin(0, cloudX/1000 * cloud_shake) * size/2;
-                let perlinRadius = Math.abs((perlin(0, y/3) + 1)/2 * (size*cloud_size));
-        
-                skyCtx.arc(cloudX + perlinOffsetX, cloudY + perlinOffsetY, perlinRadius, 0, Math.PI * 2);
+            let cloudY = (perlin(0, y / 10) * (perlin(cloudX / 2000, sky.height / 2000)) + sky.height / 5);
+
+            for (let j = 0; j < Math.floor(z * 2); j++) {
+                let perlinOffsetX = perlin(0, cloudY / 1000 * cloud_shake) * size / 1.2;
+                let perlinOffsetY = perlin(0, cloudX / 1000 * cloud_shake) * size / 1.2;
+                let perlinRadius = Math.abs((perlin(0, y / 3) + 1) / 2 * (size * cloud_size));
+
+                skyCtx.fillStyle = `rgba(255, 255, 255, ${z * cloud_density})`;
+                skyCtx.beginPath();
+                skyCtx.arc(cloudX + perlinOffsetX, cloudY + perlinOffsetY, (perlinRadius + z * 11 ** 2) / 2, Math.PI, Math.PI * 2);
+                skyCtx.closePath();
+                skyCtx.fill();
+
+                skyCtx.fillStyle = `rgba(220, 220, 220, ${z * cloud_density})`;
+                skyCtx.beginPath();
+                skyCtx.arc(cloudX + perlinOffsetX, cloudY + perlinOffsetY, (perlinRadius + z * 11 ** 2) / 2, 0, Math.PI);
+                skyCtx.closePath();
+                skyCtx.fill();
             }
-        
-            skyCtx.closePath();
-            skyCtx.fill();
+
             // skyCtx.fillStyle = `rgba(255, 255, 255, ${z/2})`;
             // skyCtx.fillRect(i * pixelation, 0, pixelation, sky.height);
         }
