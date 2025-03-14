@@ -92,7 +92,10 @@ setInterval(() => {
 
         if (z > 0.5) {
             skyCtx.fillStyle = `rgba(255, 255, 255, ${z})`;
-            skyCtx.fillRect(i * pixelation, 0, pixelation, sky.height);
+            // skyCtx.fillRect(i * pixelation, 0, pixelation, sky.height);
+            skyCtx.beginPath();
+            skyCtx.arc(i * pixelation, Math.floor(Math.random() * 100), 50, 0, Math.PI * 2, false);
+            skyCtx.fill();
         }
     }
 
