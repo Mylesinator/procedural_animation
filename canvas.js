@@ -158,5 +158,3 @@ setInterval(() => {
         bgCtx.fillRect(i * pixelation, background.height - y, pixelation, y);
     }
 }, 0);
-
-drawCar(charCtx, character);
